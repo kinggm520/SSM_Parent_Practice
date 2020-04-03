@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+">
+    <!--注解包扫描-->
+    <context:component-scan base-package="cn.kinggm520.controller"/>
+
+
+    <!--mvc 注解驱动 方便解析json-->
+    <mvc:annotation-driven/>
+
+    <!--静态资源权限开放-->
+    <mvc:default-servlet-handler/>
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+
+
+    <!--配置简单映射异常处理器-->
+   <!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="error"/>
+    </bean>-->
+
+    <!--配置权限拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--配置对哪些资源执行拦截操作-->
+            <mvc:mapping path="/**"/>
+            <!--配置哪些资源排除拦截操作-->
+            <mvc:exclude-mapping path="/user/login"/>
+            <bean class="cn.kinggm520.interceptor.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

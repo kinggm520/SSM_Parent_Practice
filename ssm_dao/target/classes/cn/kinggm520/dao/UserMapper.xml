@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.kinggm520.dao.UserMapper">
+
+    <!--登录-->
+    <select id="login" parameterType="user" resultType="user">
+        select * from sys_user where username=#{username} and password=#{password}
+    </select>
+
+    <!--查询用户列表-->
+    <select id="findAll" resultType="user">
+        select * from sys_user
+    </select>
+
+    <!--删除用户-->
+    <delete id="delUser" parameterType="long">
+        delete from sys_user where id =#{userId}
+    </delete>
+
+    <!--删除用户角色关系-->
+    <delete id="delUserRoleRel" parameterType="long">
+        delete from sys_user_role where userId = #{userId}
+    </delete>
+
+
+    <!--添加用户-->
+    <insert id="save" parameterType="user">
+        <!-- 保存成功以后, 获取字段为id的值,赋给User对象的id属性 -->
+        <selectKey keyProperty="id" keyColumn="id" resultType="Long" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into sys_user values(NULL ,#{username},#{email},#{password},#{phoneNum})
+    </insert>
+
+
+    <!--添加用户角色关系-->
+    <insert id="saveUserRoleRel" parameterType="long">
+        insert into sys_user_role VALUES (#{userId},#{roleId})
+    </insert>
+
+
+
+</mapper>

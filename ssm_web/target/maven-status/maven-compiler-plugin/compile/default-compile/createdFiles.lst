@@ -1,0 +1,3 @@
+cn\kinggm520\controller\UserController.class
+cn\kinggm520\controller\RoleController.class
+cn\kinggm520\interceptor\MyInterceptor.class
